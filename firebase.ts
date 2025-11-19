@@ -1,26 +1,28 @@
-// Gerekli fonksiyonları Firebase SDK'dan içe aktarıyoruz
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 
-// 🛑 ÖNEMLİ: Kodu, Vercel'e girdiğin gizli Environment Variables'ı (VITE_APP_ ile başlayan) okuması için düzenliyoruz.
-// Bu, "Demo Modu" hatasını çözecek olan yapıdır.
+// ------------------------------------------------------------------
+// Firebase Yapılandırma Bilgileri (Production)
+// ------------------------------------------------------------------
+
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_API_KEY,
-  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_APP_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_APP_ID,
-  // measurementId, analytics için zorunlu değildir, kodun içindeki diğer dosyalar bunu okuyacaktır.
+  apiKey: "AIzaSyDHB8lFY_Icwn2t56CCb6orvXLDHQpDUEg",
+  authDomain: "portfolyo-g360.firebaseapp.com",
+  projectId: "portfolyo-g360",
+  storageBucket: "portfolyo-g360.firebasestorage.app",
+  messagingSenderId: "334475755534",
+  appId: "1:334475755534:web:9e9da7401385bab7097c5f",
+  measurementId: "G-ZVNQNCG9PR"
 };
 
-// 1. Firebase Uygulamasını Başlat
-const app = initializeApp(firebaseConfig);
+// ------------------------------------------------------------------
 
-// 2. Gerekli Servisleri (Veritabanı ve Depolama) Başlat
-const db = getFirestore(app);
-const storage = getStorage(app);
+// Initialize Firebase (compat check for existing apps)
+// Prevents double initialization in hot-reload environments
+const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 
-// 3. Servisleri dışarıya aktar
+const db = app.firestore();
+const storage = app.storage();
+
 export { db, storage };
